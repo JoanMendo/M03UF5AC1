@@ -13,35 +13,44 @@ public class A
         int score;
         for (int i = 0; i < 2; i++)
         {
-            Console.WriteLine("Escriu el teu nom");
-            player = Console.ReadLine();
-            while (PlayerCheck(player) == false)
+            try
             {
-               
-                Console.WriteLine("El nom només pot contenir caracters alfabetics i numerics");
+                Console.WriteLine("Escriu el teu nom");
                 player = Console.ReadLine();
-            }
-            Console.WriteLine("Introdueix el nom de la missió");
-            mission = Console.ReadLine();
-            while (MissionCheck(mission) == false)
-            {
-               
-                Console.WriteLine("El format ha de ser una lletra romana i tres nombres, per exemple: Alfa-028");
-                mission = Console.ReadLine();
-            }
-            Console.WriteLine("Introdueix la teva puntuacio");
-            score = Convert.ToInt32(Console.ReadLine());
-            while (score  < 0 || score > 500)
-            {
-                Console.WriteLine("La puntuació ha d'estar entre 0 i 500");
-                score = Convert.ToInt32(Console.ReadLine());
-               
-            }
+                while (PlayerCheck(player) == false || player.Length < 1)
+                {
 
-            ScorePlayer newPlayer = new ScorePlayer(player, mission, score);
-            lista.Add(newPlayer);
-              
+                    Console.WriteLine("El nom només pot contenir caracters alfabetics i numerics");
+                    player = Console.ReadLine();
+                }
+                Console.WriteLine("Introdueix el nom de la missió");
+                mission = Console.ReadLine();
+                while (MissionCheck(mission) == false)
+                {
+
+                    Console.WriteLine("El format ha de ser una lletra romana i tres nombres, per exemple: Alfa-028");
+                    mission = Console.ReadLine();
+                }
+                Console.WriteLine("Introdueix la teva puntuacio");
+                score = Convert.ToInt32(Console.ReadLine());
+                while (score < 0 || score > 500)
+                {
+                    Console.WriteLine("La puntuació ha d'estar entre 0 i 500");
+                    score = Convert.ToInt32(Console.ReadLine());
+
+                }
+
+                ScorePlayer newPlayer = new ScorePlayer(player, mission, score);
+                lista.Add(newPlayer);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message} Torna a escriure les dades");
+                i--;
+            }
         }
+        Console.WriteLine("Puntuacions");
+        Console.WriteLine("==============================================");
         GenerateUniqueRanking(lista);
     }
 
